@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ida="http://www.idainfront.se" xmlns:iip="http://www.idainfront.se/ns/iip/1.0" xmlns:iipax="http://www.idainfront.se/schema/archive-2.2" name="archive" targetNamespace="http://www.idainfront.se/schema/archive-2.2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>
+  MTOM
+  Note that the connecting web service clients must use the SOAP Message Transmission Optimization
+  Mechanism, MTOM, when attachments are to be sent or received. This includes the methods
+  ArchiveSip, ArchiveSipAsync, ValidateSipAsync and GetFileContent. MTOM is normally not enabled by
+  default on generated clients, but can often be enabled by configuration.
+  All webservice methods have a common argument, CallerID. This is used to identify the calling
+  service in the statistics iipax register for webservice calls.
+  </wsdl:documentation>
+  <wsdl:documentation>
+  CHARACTER ENCODING
+  When submitting text files, it may be appropriate to specify the file's character encoding. The
+  character encoding is then stored as metadata on the file object in the archive. This makes the
+  full text search in file contents work regardless of special characters such as åäö. The
+  character encoding is optional and is defined with an Encoding field that is located under the
+  Content-field used for the actual file content. Typical values are "ISO-8859-1", "ISO-8859-15"
+  and "UTF-8" (without "" marks).
+  </wsdl:documentation>
+  <wsdl:documentation>
+  DIGEST
+  When submitting files, an optional checksum can be provided for verification against a generated
+  checksum for the file. If the checksums do not match the submission fails. A checksum will always
+  be saved as metadata on the file object. If not specified, then the generated checksum is saved.
+  The checksum must be of type SHA1 and should be formatted as follows:
+  "SHA1:de9f2c7fd25e1b3afad3e85a0bd17d9b100db4b3" (without "" marks where the twenty character
+  checksum is replaced with the current checksum). The checksum is defined with a Digest field that
+  is located under the Content-field used for the actual file content.
+  </wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.idainfront.se/schema/archive-2.2">
+      <xsd:include schemaLocation="archive-2.2.4.xsd" />
+    </xsd:schema>
+    <xsd:schema targetNamespace="http://www.idainfront.se">
+      <xsd:include schemaLocation="faultDetailElement.xsd" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ArchiveSipRequestMessage">
+    <wsdl:part name="body" element="iipax:ArchiveSip" />
+  </wsdl:message>
+  <wsdl:message name="ArchiveSipResponseMessage">
+    <wsdl:part name="body" element="iipax:ArchiveSipResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateSipAsynchRequestMessage">
+    <wsdl:part name="body" element="iipax:ValidateSipAsynch" />
+  </wsdl:message>
+  <wsdl:message name="ValidateSipAsynchResponseMessage">
+    <wsdl:part name="body" element="iipax:ValidateSipAsynchResponse" />
+  </wsdl:message>
+  <wsdl:message name="ArchiveSipFaultMessage">
+    <wsdl:part name="body" element="iipax:ArchiveSipFault" />
+  </wsdl:message>
+  <wsdl:message name="ArchiveSipAsynchRequestMessage">
+    <wsdl:part name="body" element="iipax:ArchiveSipAsynch" />
+  </wsdl:message>
+  <wsdl:message name="ArchiveSipAsynchResponseMessage">
+    <wsdl:part name="body" element="iipax:ArchiveSipAsynchResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSipStatusRequestMessage">
+    <wsdl:part name="body" element="iipax:GetSipStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetSipStatusResponseMessage">
+    <wsdl:part name="body" element="iipax:GetSipStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchAipsRequestMessage">
+    <wsdl:part name="body" element="iipax:SearchAips" />
+  </wsdl:message>
+  <wsdl:message name="SearchAipsResponseMessage">
+    <wsdl:part name="body" element="iipax:SearchAipsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CountAipsRequestMessage">
+    <wsdl:part name="body" element="iipax:CountAips" />
+  </wsdl:message>
+  <wsdl:message name="CountAipsResponseMessage">
+    <wsdl:part name="body" element="iipax:CountAipsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMetaDataRequestMessage">
+    <wsdl:part name="body" element="iipax:GetMetaData" />
+  </wsdl:message>
+  <wsdl:message name="GetMetaDateResponseMessage">
+    <wsdl:part name="body" element="iipax:GetMetaDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetChildrenRequestMessage">
+    <wsdl:part name="body" element="iipax:GetChildren" />
+  </wsdl:message>
+  <wsdl:message name="GetChildrenResponseMessage">
+    <wsdl:part name="body" element="iipax:GetChildrenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFileContentRequestMessage">
+    <wsdl:part name="body" element="iipax:GetFileContent" />
+  </wsdl:message>
+  <wsdl:message name="GetFileContentResponseMessage">
+    <wsdl:part name="body" element="iipax:GetFileContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFileUrlRequestMessage">
+    <wsdl:part name="body" element="iipax:GetFileUrl" />
+  </wsdl:message>
+  <wsdl:message name="GetFileUrlResponseMessage">
+    <wsdl:part name="body" element="iipax:GetFileUrlResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAipRequestMessage">
+    <wsdl:part name="body" element="iipax:GetAip" />
+  </wsdl:message>
+  <wsdl:message name="GetAipResponseMessage">
+    <wsdl:part name="body" element="iipax:GetAipResponse" />
+  </wsdl:message>
+  <wsdl:message name="ArchiveFaultMessage">
+    <wsdl:part name="body" element="ida:msg" />
+  </wsdl:message>
+  <wsdl:message name="OrderDipRequestMessage">
+    <wsdl:part name="body" element="iipax:OrderDip" />
+  </wsdl:message>
+  <wsdl:message name="OrderDipResponseMessage">
+    <wsdl:part name="body" element="iipax:OrderDipResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSubmissionAgreementsRequestMessage">
+    <wsdl:part name="body" element="iipax:GetSubmissionAgreements" />
+  </wsdl:message>
+  <wsdl:message name="GetSubmissionAgreementsResponseMessage">
+    <wsdl:part name="body" element="iipax:GetSubmissionAgreementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="PreprocessSipRequestMessage">
+    <wsdl:part name="body" element="iipax:PreprocessSip" />
+  </wsdl:message>
+  <wsdl:message name="PreprocessSipResponseMessage">
+    <wsdl:part name="body" element="iipax:PreprocessSipResponse" />
+  </wsdl:message>
+  <wsdl:message name="PreprocessSipFaultMessage">
+    <wsdl:part name="body" element="iipax:PreprocessSipFault" />
+  </wsdl:message>
+  <wsdl:message name="OrderDipFastRequestMessage">
+    <wsdl:part name="body" element="iipax:OrderDipFast" />
+  </wsdl:message>
+  <wsdl:message name="OrderDipFastResponseMessage">
+    <wsdl:part name="body" element="iipax:OrderDipFastResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ArchivePortType">
+    <wsdl:operation name="ArchiveSip">
+      <wsdl:documentation>Operation for archiving a SIP. Returns the ID of the created archive
+       object. The SIP package will be preprocessed according to its corresponding submission
+       agreement before being stored unless the preprocessed attribute of the ArchiveSip element is
+       set to true.
+      </wsdl:documentation>
+      <wsdl:input message="iipax:ArchiveSipRequestMessage" />
+      <wsdl:output message="iipax:ArchiveSipResponseMessage" />
+      <wsdl:fault name="fault" message="iipax:ArchiveSipFaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ArchiveSipAsynch">
+      <wsdl:documentation>Asynchronously archives a SIP. Returns an ID of the transaction. Note that
+      this is not the ID of the actual archive object.  To get the result of the archiving the
+      operation GetSipStatus can be called with the ID of the transaction.  The SIP package will be
+       preprocessed according to its corresponding submission agreement before being stored unless
+       the preprocessed attribute of the ArchiveSip element is set to true.</wsdl:documentation>
+      <wsdl:input message="iipax:ArchiveSipAsynchRequestMessage" />
+      <wsdl:output message="iipax:ArchiveSipAsynchResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSipStatus">
+      <wsdl:documentation>Operation for getting the status of a SIP archived asynchronously.  The
+      status can be one of ARCHIVED, ERROR, or PROCESSING.  If the status is ARCHIVED the ID of the
+      archive object is included in the response.  If the status is ERROR the response includes
+      fault details with further information on the error.</wsdl:documentation>
+      <wsdl:input message="iipax:GetSipStatusRequestMessage" />
+      <wsdl:output message="iipax:GetSipStatusResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateSipAsynch">
+      <wsdl:documentation>Operation that validates a SIP. The validation is made
+      asynchronously. Returns a response with the ID of the transaction.  To get the result of the
+      validation use GetSipStatus. A status of ARCHIVED indicates that the SIP
+      validated.</wsdl:documentation>
+      <wsdl:input message="iipax:ValidateSipAsynchRequestMessage" />
+      <wsdl:output message="iipax:ValidateSipAsynchResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchAips">
+      <wsdl:documentation>
+        Operation that performs a search for archive objects. A search is specified with one or
+        several queries. A query consist of at least one search-condition, zero or several
+        object-types to search for, and a query-type. If no object-type is given it means that
+        objects of all types are considered to be part of the search. Note that, if an object type
+        for an archive object is specified in the query, none of the documents in the archive object
+        will be considered, only the archive object itself. The available query-types are MAIN,
+        ANCESTOR and DESCENDANT. The default query-type is DESCENDANT. Multiple queries of type
+        ANCESTOR and DESCENDANT is allowed but only one query can be of type MAIN.  For a query of
+        type DESCENDANT, an archive object is considered to be a match if the query matches the
+        archive object itself or at least one of its documents or files. For a query of type MAIN,
+        an archive object is only considered to be a match if the query matches the archive object
+        itself. For a query of type ANCESTOR, an archive object is considered to be a match if the
+        query matches the archive object itself or any of its ancestors (parents).  The returned
+        archive object:s only contain id, display name, type and requested attributes (storage
+        path/documents/files are not included). The operation GetAip should be used to get the
+        entire archive object (although without file content). If one query is specified, archive
+        objects that match the query are returned. When using several queries, an intersection of
+        the search results is returned. That is, if two queries are specified and one query matches
+        [a, b, c] and the other [b, c, d] the result of the search is [b, c].  A search-root-path
+        can be specified to narrow the search scope. This means that only archive objects beneath
+        this search root are considered to be a valid result.  It is possible to specify which
+        single value attributes that should be returned in the result. Note that it is not possible
+        to request multivalued attributes.  The sort order of the requested attributes can be
+        specified. The available sort orders are ascending or descending. If no sort order is given
+        for an attribute, ascending will be used as default.  An offset can be used to specify which
+        of the matching archive objects that should be returned. If the match consists of [a, b, c,
+        d] and offset is set to 2, [c, d] will be returned. If offset is not given the default value
+        is 0.  A page size can be used to specify the maximum number of returned archive objects. If
+        the match consists of [a, b, c, d] and page size is set to 2, [a, b] will be returned (if
+        offset is 0). If the match consists of [a, b, c, d, e, f], offset is set to 1 and page size
+        to 3, [b, c, d] will be returned.  The total number of matching archive objects, ignoring
+        page size and offset, is also returned if that option is set in the request.
+      </wsdl:documentation>
+      <wsdl:input message="iipax:SearchAipsRequestMessage" />
+      <wsdl:output message="iipax:SearchAipsResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CountAips">
+      <wsdl:documentation>
+        Operation that performs a search for archive objects and returns the number of hits.  A
+        search is specified with one or several queries. A query consist of at least one
+        search-condition, zero or several object-types to search for, and a query-type. If no
+        object-type is given it means that objects of all types are considered to be part of the
+        search. Note that, if an object type for an archive object is specified in the query, none
+        of the documents in the archive object will be considered, only the archive object
+        itself. The available query-types are MAIN, ANCESTOR and DESCENDANT. The default query-type
+        is DESCENDANT. Multiple queries of type ANCESTOR and DESCENDANT is allowed but only one
+        query can be of type MAIN.  For a query of type DESCENDANT, an archive object is considered
+        to be a match if the query matches the archive object itself or at least one of its
+        documents or files. For a query of type MAIN, an archive object is only considered to be a
+        match if the query matches the archive object itself. For a query of type ANCESTOR, an
+        archive object is considered to be a match if the query matches the archive object itself or
+        any of its ancestors (parents).  If one query is specified, the count of archive objects
+        that match the query are returned.  When using several queries, a count of the intersection
+        of the search results is returned.  That is, if two queries are specified and one query
+        matches [a, b, c] and the other [b, c, d] the result of the search is 2.  A search-root-path
+        can be specified to narrow the search scope. This means that only archive objects beneath
+        the search root are considered.
+      </wsdl:documentation>
+      <wsdl:input message="iipax:CountAipsRequestMessage" />
+      <wsdl:output message="iipax:CountAipsResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAip">
+      <wsdl:documentation>Returns an entire archive object including all documents and files. The
+      actual content of the files is not returned by this operation. For this the GetFileContent
+      operation should be used.  It is possible to specify which attributes that should be returned
+      in the result. If no attributes are specified, all will be returned.</wsdl:documentation>
+      <wsdl:input message="iipax:GetAipRequestMessage" />
+      <wsdl:output message="iipax:GetAipResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFileContent">
+      <wsdl:documentation>Returns the content of a specific file. Meta data like display name,
+      object type and attributes are also included.</wsdl:documentation>
+      <wsdl:input message="iipax:GetFileContentRequestMessage" />
+      <wsdl:output message="iipax:GetFileContentResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFileUrl">
+      <wsdl:documentation>Returns a url to a specific file. This url can then be used for access
+      a file directly for streaming purposes. For security reasons the url that is returned by 
+      this call is randomized and is only possible to use for a specified time period which is 
+      a config setting for the iipax server. This means streaming or reading must commence shortly
+      after this call.
+      </wsdl:documentation>
+      <wsdl:input message="iipax:GetFileUrlRequestMessage" />
+      <wsdl:output message="iipax:GetFileUrlResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMetaData">
+      <wsdl:documentation>The method GetMetaData is used to retrieve information about objects
+      configuration from the archive. The result is a list of all attribute types and object
+      types that may be present in the archive. For each type is reported also a number of
+      properties like displayname, description, etc.
+      </wsdl:documentation>
+      <wsdl:input message="iipax:GetMetaDataRequestMessage" />
+      <wsdl:output message="iipax:GetMetaDateResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChildren">
+      <wsdl:documentation>Returns the children objects of a node in the archive. The operation can
+      be used to traverse the entire archive down to document nodes. If an empty string is passed to
+      GetChildren, the children of the root node are returned. For each child ID, display name,
+      attributes and object type are returned.  It is possible to specify which attributes that
+      should be returned in the result. If no attributes are specified, all will be
+      returned.</wsdl:documentation>
+      <wsdl:input message="iipax:GetChildrenRequestMessage" />
+      <wsdl:output message="iipax:GetChildrenResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OrderDip">
+      <wsdl:documentation>Operation to submit a DIP order. An ID of the order, in a readable format,
+      is returned. The order consists of a list of references to the ordered items, the delivery
+      channel and some customer information. The method performs the following steps:
+      1. A packing list with custom objects is generated.
+      2. The ordered items are packed in a zip file.
+      3. The zip file is sent via e-mail.
+      
+      The method takes the following parameters:
+      * OrderList: a list of references to the objects included in the order.
+      * DeliveryChannel: the way in which the order must be delivered, at present limited to e-mail.
+      * Customer: information about the client to whom the order is shipped to.
+      * IncludeFileContent: boolean which indicates if the file content will be delivered or not.
+                            The file structure of the archive at the root of the ordered archival
+                            objects and meta-data for all levels / objects are always delivered.
+      When the order is placed a case is created for it and its id is returned in the response.
+      </wsdl:documentation>
+      <wsdl:input message="iipax:OrderDipRequestMessage" />
+      <wsdl:output message="iipax:OrderDipResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubmissionAgreements">
+      <wsdl:documentation>The method GetSubmissionAgreements is used to retrieve information
+      about all available submission agreements in the archive. The result is a tree structure
+      with producers at the root level, delivery systems as the second level and contracted AIP
+      configuration as the third level. Please note that the AIP configuration level contains a
+      store policy element that doesn't represent all store policies in iipax. Two of the policies
+      map to the same value and are undistinguishable from each other. See the comments in the
+      declaration of the "storePolicy" simple type in the archive-2.2.X.xsd-file for more info.   
+      </wsdl:documentation>
+      <wsdl:input message="iipax:GetSubmissionAgreementsRequestMessage" />
+      <wsdl:output message="iipax:GetSubmissionAgreementsResponseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PreprocessSip">
+      <wsdl:documentation>Operation that preprocesses a SIP. The preprocessing is made
+       synchronously and will include all the preprocessing steps normally performed by an ArchiveSip
+       operation. The preprocessed data is returned and nothing is stored on the server. The actual
+       content of the files is not returned. The returned data can now be used as an argument
+       to ArchiveSip with the preprocessed attribute of the ArchiveSip element set to true. The
+       combination of first calling PreprocessSip and then calling ArchiveSip (preprocess=true) with
+       the returned data is equivalent to calling ArchiveSip (preprocess=false) directly. However
+       the PreprocessSip call doesn't return the file contents. Before calling ArchiveSip it must
+       be added to the returned data. If the preprocessing fails then a SOAP fault is generated
+       including detailed information about the errors causing it.
+      </wsdl:documentation>
+      <wsdl:input message="iipax:PreprocessSipRequestMessage" />
+      <wsdl:output message="iipax:PreprocessSipResponseMessage" />
+      <wsdl:fault name="fault" message="iipax:PreprocessSipFaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OrderDipFast">
+      <wsdl:documentation>Operation to submit a DIP order fast. An ID of the order, in a readable format,
+      is returned. The order consists of a list of references to the ordered items, the delivery
+      channel and some customer information. An any element exists in the request to be used for easily 
+	  extending the request. The method performs the following steps:
+	  1. A packing list with custom objects is generated.
+	  2. A check is made to see if the fast process can be used or if the "normal" OrderDip must be used.
+      3. The ordered items are packed in a zip file.
+      4. The zip file is sent via e-mail.
+      
+      The method takes the following parameters:
+      * OrderList: a list of references to the objects included in the order.
+      * DeliveryChannel: 	the way in which the order must be delivered, at present limited to e-mail.
+							If e-mail isn't used the OrderDip process will be executed with 
+							deliveryChannel updated to e-mail.
+      * Customer: information about the client to whom the order is shipped to.
+      * IncludeFileContent: boolean which indicates if the file content will be delivered or not.
+                            The file structure of the archive at the root of the ordered archival
+                            objects and meta-data for all levels / objects are always delivered.
+	  * Any element: 	Extensionpoint for the schema. It's possible to include any custom element.
+						It's possible with nested elements but elements with value must be like 
+						key-value-pairs, no attributes can be used. 
+						E.g.
+							<element1>value1</element1>
+						or
+							<element1><element2>value2</element2></element1>
+						If elements with the same name exists the last one will be used.
+      When the order is placed a case is created for it and its id is returned in the response.
+      </wsdl:documentation>
+      <wsdl:input message="iipax:OrderDipFastRequestMessage" />
+      <wsdl:output message="iipax:OrderDipFastResponseMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ArchiveBinding" type="iipax:ArchivePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ArchiveSipAsynch">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/ArchiveSipAsynch" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateSipAsynch">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/ValidateSipAsynch" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ArchiveSip">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/ArchiveSip" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSipStatus">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/GetSipStatus" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchAips">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/SearchAips" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CountAips">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/CountAips" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMetaData">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/GetObjectTypes" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildren">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/GetFolders" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFileContent">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/GetFile" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFileUrl">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/GetFileUrl" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAip">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/GetAip" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OrderDip">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/OrderDip" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubmissionAgreements">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/GetSubmissionAgreements" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreprocessSip">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/PreprocessSip" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="OrderDipFast">
+      <soap:operation soapAction="http://www.idainfront.se/schema/archive-2.2/OrderDipFast" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ArchiveService">
+    <wsdl:port name="ArchivePort" binding="iipax:ArchiveBinding">
+      <soap:address location="http://app099.kba.local:8080/iip" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

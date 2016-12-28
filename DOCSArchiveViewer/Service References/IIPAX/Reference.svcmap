@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e0ca68db-e3d1-41e2-882e-4b1b2c4df75b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="C:\lib\wsdl\archive-2.2.4.wsdl" Protocol="file" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="archive.wsdl" MetadataType="Wsdl" ID="14063290-1b9b-4531-8b57-ef9fc96accb2" SourceId="1" SourceUrl="file:///C:/lib/wsdl/archive-2.2.4.wsdl" />
+    <MetadataFile FileName="archive-2.xsd" MetadataType="Schema" ID="231b0b52-53b4-479c-9e46-5c8c33d0a2ab" SourceId="1" SourceUrl="file:///C:/lib/wsdl/archive-2.2.4.xsd" />
+    <MetadataFile FileName="faultDetailElement.xsd" MetadataType="Schema" ID="a850c5f4-f50e-4c7e-8926-8119a574a8ee" SourceId="1" SourceUrl="file:///C:/lib/wsdl/faultDetailElement.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

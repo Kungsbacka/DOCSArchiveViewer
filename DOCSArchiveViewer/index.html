@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Söksida för Diariet</title>
+	<meta charset="utf-8" />
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/datepicker.css" rel="stylesheet" />
+    <link href="Content/site.css" rel="stylesheet" />
+    <link href="Content/print.css" media="print" rel="stylesheet" />
+    <link rel="apple-touch-icon" sizes="57x57" href="icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+    <link rel="manifest" href="icon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+</head>
+<body>
+    <div class="page-header hidden-print">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <img src="Content/kungsbacka_logo.png" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>Söksida för diariet</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button type="button" id="display_name_addon" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Söktyp <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="search_type_dnr">Ärendenummer</a></li>
+                                <li><a href="#" id="search_type_text">Ärendemening</a></li>
+                            </ul>
+                        </span>
+                        <input type="text" id="display_name" class="form-control" placeholder="Sök ärendenummer" aria-describedby="display_name_addon" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info" type="button" id="searchButton">Sök</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group date">
+                        <span class="input-group-addon" id="created_from_addon"><i class="glyphicon glyphicon-th" aria-hidden="true"></i></span>
+                        <span class="input-group-addon" onclick="$('#created_from').val('')"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></span>
+                        <input id="created_from" type="text" class="form-control datepicker" placeholder="Från datum" aria-describedby="created_from_addon" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true" data-date-initial-date="2012-01-01" data-date-start-view="2" data-date-picker-position="bottom-left" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group date">
+                        <span class="input-group-addon" id="created_to_addon"><i class="glyphicon glyphicon-th" aria-hidden="true"></i></span>
+                        <span class="input-group-addon" onclick="$('#created_to').val('')"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></span>
+                        <input id="created_to" type="text" class="form-control datepicker" placeholder="Till datum" aria-describedby="created_to_addon" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true" data-date-initial-date="2012-01-01" data-date-start-view="2" data-date-picker-position="bottom-left" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" id="resultsContainer">
+        <div class="list-group" id="results">
+        </div>
+        <div class="row" id="noHits">
+            <div class="col-sm-12"><h3>Inga ärenden hittade</h3></div>
+        </div>
+        <div class="row" id="moreRow">
+            <div class="col-sm-2 col-sm-offset-5"><button class="btn btn-info" id="more">Mer</button></div>
+        </div>
+    </div>
+    <div id="details" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 id="det_display_name" class="modal-title">IF00-00003/72</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-2 font-bold">Inkom datum:</div>
+                            <div class="col-sm-2" id="det_skapat_docs"></div>
+                            <div class="col-sm-8 font-bold">Beskrivning</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 font-bold">Status:</div>
+                            <div class="col-sm-2" id="det_status">Avslutad</div>
+                            <div class="col-sm-8" id="det_arendemening_docs"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 font-bold">Handläggare:</div>
+                            <div class="col-sm-2" id="det_handlaggare_docs"></div>
+                            <div class="col-sm-8">&nbsp;</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 font-bold"><h3>Händelser</h3></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 table-responsive" id="det_handelser">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+    <script src="Scripts/bootstrap-datepicker.js"></script>
+    <script src="Scripts/arkiv.js"></script>
+    <script src="Scripts/docs.js"></script>
+
+</body>
+</html>

@@ -52,6 +52,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -180,21 +181,61 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\ArchiveObjectController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\IIPAX\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\datepicker.css" />
+    <Content Include="Content\kungsbacka_logo.png" />
+    <Content Include="Content\print.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="icon\android-icon-144x144.png" />
+    <Content Include="icon\android-icon-192x192.png" />
+    <Content Include="icon\android-icon-36x36.png" />
+    <Content Include="icon\android-icon-48x48.png" />
+    <Content Include="icon\android-icon-72x72.png" />
+    <Content Include="icon\android-icon-96x96.png" />
+    <Content Include="icon\apple-icon-114x114.png" />
+    <Content Include="icon\apple-icon-120x120.png" />
+    <Content Include="icon\apple-icon-144x144.png" />
+    <Content Include="icon\apple-icon-152x152.png" />
+    <Content Include="icon\apple-icon-180x180.png" />
+    <Content Include="icon\apple-icon-57x57.png" />
+    <Content Include="icon\apple-icon-60x60.png" />
+    <Content Include="icon\apple-icon-72x72.png" />
+    <Content Include="icon\apple-icon-76x76.png" />
+    <Content Include="icon\apple-icon-precomposed.png" />
+    <Content Include="icon\apple-icon.png" />
+    <Content Include="icon\browserconfig.xml" />
+    <Content Include="icon\favicon-16x16.png" />
+    <Content Include="icon\favicon-32x32.png" />
+    <Content Include="icon\favicon-96x96.png" />
+    <Content Include="icon\favicon.ico" />
+    <Content Include="icon\ms-icon-144x144.png" />
+    <Content Include="icon\ms-icon-150x150.png" />
+    <Content Include="icon\ms-icon-310x310.png" />
+    <Content Include="icon\ms-icon-70x70.png" />
+    <Content Include="index.html" />
+    <Content Include="Scripts\arkiv.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -216,12 +257,111 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="icon\manifest.json" />
+    <None Include="Properties\PublishProfiles\Web051.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\docs.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <None Include="Service References\IIPAX\configuration91.svcinfo" />
+    <None Include="Service References\IIPAX\configuration.svcinfo" />
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.ArchiveSipAsynchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.ArchiveSipAsynchResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.ArchiveSipResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.ArchiveSipResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.CountAipsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.CountAipsResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetAipResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetAipResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetChildrenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetFileContentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetFileContentResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetFileUrlResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetFileUrlResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetMetaDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetMetaDataResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetSipStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetSipStatusResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.GetSubmissionAgreementsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.Object.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.OrderDipFastResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.OrderDipFastResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.OrderDipResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.OrderDipResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.PreprocessSipResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.SearchAipsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.SearchAipsResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.SubmissionAgreement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.System.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.ValidateSipAsynchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\IIPAX\DOCSArchiveViewer.IIPAX.ValidateSipAsynchResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\IIPAX\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -232,11 +372,13 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Service References\IIPAX\archive-2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\IIPAX\archive.wsdl" />
+    <None Include="Service References\IIPAX\faultDetailElement.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -249,6 +391,12 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\IIPAX\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

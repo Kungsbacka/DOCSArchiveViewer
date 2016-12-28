@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:ida="http://www.idainfront.se" elementFormDefault="qualified" targetNamespace="http://www.idainfront.se" xmlns="http://www.w3.org/2001/XMLSchema">
+  <element name="msg" type="string" />
+</schema>
