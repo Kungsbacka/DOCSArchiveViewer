@@ -56,12 +56,18 @@ namespace DOCSArchiveViewer.Controllers
             }
         }
 
+        /*
+         * The GetFileContent method of the IIPAX archive SOAP connection will not work with .NET
+         * since the MTOM multipart that holds the actual file data lacks the Content-Transfer-Encoding: binary
+         * header. So we just do a raw post which looks like SOAP, and then handle the result as a
+         * plain HTTP multipart response.
+         * */
         // POST: api/File
         public async Task<HttpResponseMessage> Post([FromBody]FileQuery query)
         {
             string id = query.id;
 
-            HttpResponseMessage result = Request.CreateResponse(HttpStatusCode.OK);
+            HttpResponseMessage result = Request.CreateResponse(HttpStatusCode.NotFound);
 
             Uri url = getServiceUri();
 
@@ -74,12 +80,13 @@ namespace DOCSArchiveViewer.Controllers
                 HttpResponseMessage resp = await httpreq.PostAsync(url, content);
                 if (resp.IsSuccessStatusCode)
                 {
-                    MultipartMemoryStreamProvider mprov2 = await resp.Content.ReadAsMultipartAsync(new MultipartMemoryStreamProvider());
+                    result.StatusCode = HttpStatusCode.OK;
+                    MultipartMemoryStreamProvider mprov2 = await resp.Content.ReadAsMultipartAsync();
                     MemoryStream ms = new MemoryStream();
                     HttpContent respContent = new StreamContent(ms);
                     foreach (HttpContent c in mprov2.Contents)
                     {
-                        Console.WriteLine(c.Headers.ContentType);
+                        // Binary data part has Content-Type: application/octet-stream
                         if (c.Headers.ContentType.ToString().StartsWith("application/octet-stream"))
                         {
                             await c.CopyToAsync(ms);
@@ -87,16 +94,16 @@ namespace DOCSArchiveViewer.Controllers
                             ms.Seek(0, SeekOrigin.Begin);
                             respContent.Headers.ContentType = c.Headers.ContentType;
                             respContent.Headers.ContentLength = ms.Length;
-
                         }
+                        // SOAP part has Content-Type: application/xop+xml
                         else if (c.Headers.ContentType.ToString().StartsWith("application/xop+xml"))
                         {
                             XmlDocument d = new XmlDocument();
                             d.Load(await c.ReadAsStreamAsync());
+                            // Use local-name() in the XPath to avoid namespace issues.
                             string fileName = d.DocumentElement.SelectSingleNode("//*[local-name()='File']/*[local-name()='DisplayName']").FirstChild.Value;
                             respContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
                             respContent.Headers.ContentDisposition.FileName = Uri.EscapeDataString(fileName);
-
                         }
                     }
                     result.Content = respContent;
