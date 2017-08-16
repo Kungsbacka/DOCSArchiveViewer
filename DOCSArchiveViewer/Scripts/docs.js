@@ -23,6 +23,7 @@ $(document).ready(function () {
         $("#display_name").val("");
         $("#arkivbildare_row").toggle(searchType == "text");
     });
+    $("#arkivbildare_row").toggle(searchType == "text");
 });
 
 var searchTypes = {
@@ -90,7 +91,7 @@ function more() {
 function displayNewResults(results, totalCount) {
     $("#results").html("");
     if (results) {
-        $("#results").append("<p><i>" + totalCount + " träff" + (totalCount > 1 ? "ar" : "") + ".</i></p>");
+        $("#results").append("<p><i>" + totalCount + " träff" + (totalCount > 1 ? "ar" : "") + "</i></p>");
     }
     displayResults(results, totalCount);
 }
