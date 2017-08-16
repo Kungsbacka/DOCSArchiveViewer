@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Configuration;
 using System.ServiceModel.Configuration;
@@ -18,11 +19,12 @@ namespace DOCSArchiveViewer.Controllers
     public class FileController : ApiController
     {
 
-        private string soapTmpl = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:arc=\"http://www.idainfront.se/schema/archive-2.2\"><soapenv:Header/><soapenv:Body><arc:GetFileContent callerId = \"?\" ><arc:Id>@id</arc:Id></arc:GetFileContent></soapenv:Body></soapenv:Envelope>";
+        //private string soapTmpl = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:arc=\"http://www.idainfront.se/schema/archive-2.2\"><soapenv:Header/><soapenv:Body><arc:GetFileContent callerId = \"?\" ><arc:Id>@id</arc:Id></arc:GetFileContent></soapenv:Body></soapenv:Envelope>";
 
         // GET: api/File
         public HttpResponseMessage Get()
         {
+//            return Post(new Controllers.FileQuery { id = "iipax://objectbase.document/docpartition#47462" });
             return new HttpResponseMessage(HttpStatusCode.NotImplemented);
         }
 
@@ -98,14 +100,46 @@ namespace DOCSArchiveViewer.Controllers
             }
         }
 
+        // POST: api/File
+        public HttpResponseMessage Post([FromBody]FileQuery query)
+        {
+            HttpResponseMessage reply = null;
+
+            ArchivePortTypeClient archive = new ArchivePortTypeClient();
+
+            GetFileContent request = new IIPAX.GetFileContent
+            {
+                Id = query.id
+            };
+
+            GetFileContentResponse response = archive.GetFileContent(request);
+
+            if(response.File != null)
+            {
+                reply = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new ByteArrayContent(response.File.Content.Data)
+                };
+                reply.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                reply.Content.Headers.ContentDisposition.FileName = Uri.EscapeDataString(response.File.DisplayName);
+                reply.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                reply.Content.Headers.ContentLength = response.File.Content.Data.Length;
+            } else
+            {
+                reply = Request.CreateErrorResponse(HttpStatusCode.NotFound, response.ToString());
+            }
+
+            return reply;
+        }
+
         /*
          * The GetFileContent method of the IIPAX archive SOAP connection will not work with .NET
          * since the MTOM multipart that holds the actual file data lacks the Content-Transfer-Encoding: binary
          * header. So we just do a raw post which looks like SOAP, and then handle the result as a
          * plain HTTP multipart response.
          * */
-        // POST: api/File
-        public async Task<HttpResponseMessage> Post([FromBody]FileQuery query)
+        // POSTE: api/File
+/*        public async Task<HttpResponseMessage> Poste([FromBody]FileQuery query)
         {
             string id = query.id;
 
@@ -153,7 +187,7 @@ namespace DOCSArchiveViewer.Controllers
             }
             return result;
         }
-
+        */
         // PUT: api/File/5
         public HttpResponseMessage Put(int id, [FromBody]string value)
         {
