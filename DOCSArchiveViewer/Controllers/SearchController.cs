@@ -23,7 +23,7 @@ namespace DOCSArchiveViewer.Controllers
         }
 
         // POST: api/Search
-        public IEnumerable<ArchiveObject> Post(SearchQuery sqs)
+        public SearchAipsResponse Post(SearchQuery sqs)
         {
             ArchivePortTypeClient ar = new ArchivePortTypeClient();
 
@@ -41,10 +41,19 @@ namespace DOCSArchiveViewer.Controllers
             search.Options.PageSize = sqs.pagesize;
             search.Options.PageSizeSpecified = true;
 
+            search.Options.SortOrder = new SortOrderDirective[] { new SortOrderDirective
+            {
+                Attribute = "display_name",
+                Order = Order.ASC
+            } };
+
+            search.Options.ReturnTotalCount = true;
+            search.Options.ReturnTotalCountSpecified = true;
+
             Query[] q = new Query[] { new Query() };
 
             q[0].type = QueryType.DESCENDANT;
-            q[0].ObjectType = new string[] { "docs_arende" };
+            q[0].ObjectType = new string[] { "docs_arende", "docs_KOMarende" };
 
             List<SearchCondition> conds = new List<SearchCondition>();
 
@@ -65,7 +74,7 @@ namespace DOCSArchiveViewer.Controllers
 
             SearchAipsResponse response = ar.SearchAips(search);
 
-            return response.ArchiveObject;
+            return response;
         }
 
         // PUT: api/Search/5

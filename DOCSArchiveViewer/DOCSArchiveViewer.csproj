@@ -211,6 +211,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="icon\manifest.json" />
     <None Include="Properties\PublishProfiles\Web051.pubxml" />
+    <None Include="Properties\PublishProfiles\Web083.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\docs.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

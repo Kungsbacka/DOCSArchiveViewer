@@ -21,6 +21,7 @@ $(document).ready(function () {
         $("#display_name").attr("placeholder", searchTypes[e.target.id].text);
         searchType = searchTypes[e.target.id].type;
         $("#display_name").val("");
+        $("#arkivbildare_row").toggle(searchType == "text");
     });
 });
 
@@ -47,8 +48,15 @@ function updateQuery() {
             Arkiv.query.attributes.push({
                 "attribute": "arendemening_docs",
                 "op": "MATCH",
-                "value": $("#display_name").val()
+                "value": "*" + $("#display_name").val() + "*"
             });
+            if ($("#arkivbildare_docs") != "") {
+                Arkiv.query.attributes.push({
+                    "attribute": "display_name",
+                    "op": "MATCH",
+                    "value": $("#arkivbildare_docs").val() + "*"
+                });
+            }
         }
     }
     if ($("#created_from").val() != "") {
@@ -79,13 +87,16 @@ function more() {
     }
 }
 
-function displayNewResults(results) {
+function displayNewResults(results, totalCount) {
     $("#results").html("");
-    displayResults(results);
+    if (results) {
+        $("#results").append("<p><i>" + totalCount + " träffar.</i></p>");
+    }
+    displayResults(results, totalCount);
 }
 
 
-function displayResults(results) {
+function displayResults(results, totalCount) {
     $("#noHits").fadeOut(100);
     if (results) {
         $(results).each(function (ix, item) {
@@ -96,7 +107,7 @@ function displayResults(results) {
                 outItem[item.nameField] = item.valueField[0];
             });
             if (outItem.secrecy != '0') {
-                outItem.arendemening_docs = 'Ärendet är sekretessklassat. Kontakta Kungsbacka Direkt på info@kungsbacka.se eller telefon 0300-830000 för mer information.';
+                outItem.arendemening_docs = 'Ärendet innehåller sekretess och/eller personuppgifter. Var vänlig och kontakta kommunarkivet via e-post <a href="mailto:kommunarkivet@kungsbacka.se">kommunarkivet@kungsbacka.se</a> eller telefon 0300-83 47 98.';
             }
             $("#results").append(itemTemplate.supplant(outItem));
         });
@@ -122,7 +133,7 @@ function getDetails(id) {
     Arkiv.details(query, displayDetails);
 }
 
-var tableTemplate = "<tr><td>{sort_docs}</td><td>{skapad_docs}</td><td>{handlingsbeskrivning}</td><td>{status_docs}</td><td>{handlaggare_docs}</td></tr>";
+var tableTemplate = "<tr><td>{sort_docs}</td><td>{skapad_docs}</td><td>{handlingsbeskrivning}</td><td>{status_docs}</td><td>{handlaggare_docs}</td><td>{filer}</td></tr>";
 
 function displayDetails(data) {
 
@@ -131,7 +142,7 @@ function displayDetails(data) {
     $("#det_arendemening_docs").html(data.arendemening_docs);
     $("#det_handlaggare_docs").html(data.handlaggare_docs);
 
-    var tableData = "<tr><th>Sort</th><th>Datum</th><th>Beskrivning</th><th>Status</th><th>Handläggare</th></tr>";
+    var tableData = "<tr><th>Sort</th><th>Datum</th><th>Beskrivning</th><th>Status</th><th>Handläggare</th><th>Filer</th></tr>";
     $(data.items).each(function (ix, item) {
         if (item.object_type == 'docs_handling') {
             var handelse = {};
@@ -141,7 +152,12 @@ function displayDetails(data) {
             handelse["skapad_docs"] = (item.skapad_docs ? item.skapad_docs.replace(/^(\d{4}-\d{2}-\d{2}).*$/, "$1") : " ");
             handelse["handlingsbeskrivning"] = item.handlingsbeskrivning;
             handelse["handlaggare_docs"] = item.handlaggare_docs;
-            handelse["filer"] = (item.Files ? item.Files.length : 0);
+            handelse["filer"] = "";
+            if (item.Files) {
+                $(item.Files).each(function (ix, item) {
+                    handelse["filer"] += '<a href="api/File?id=' + encodeURIComponent(item.id) + '" class="archiveFile">' + item.display_name + '</a>';
+                });
+            }
             tableData += tableTemplate.supplant(handelse);
         }
     });

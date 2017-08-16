@@ -20,8 +20,8 @@
 //                $(data).each(function (ix, item) {
 //                    console.log(item.displayNameField);
 //                });
-                my.searchResults = data;
-                callback(my.searchResults);
+                my.searchResults = data.archiveObjectField;
+                callback(my.searchResults, data.totalCountField);
             },
             error: function (xhr, status, errorThrown) {
                 alert(status);
