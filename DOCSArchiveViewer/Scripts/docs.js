@@ -20,7 +20,7 @@ $(document).ready(function () {
     $(".dropdown-menu > li > a").click(function (e) {
         $("#display_name").attr("placeholder", searchTypes[e.target.id].text);
         searchType = searchTypes[e.target.id].type;
-        $("#display_name").val("");
+        //$("#display_name").val("");
         $("#arkivbildare_row").toggle(searchType == "text");
     });
     $("#arkivbildare_row").toggle(searchType == "text");
@@ -134,7 +134,7 @@ function getDetails(id) {
     Arkiv.details(query, displayDetails);
 }
 
-var tableTemplate = "<tr><td>{sort_docs}</td><td>{skapad_docs}</td><td>{handlingsbeskrivning}</td><td>{status_docs}</td><td>{handlaggare_docs}</td><td>{filer}</td></tr>";
+var tableTemplate = "<tr><td>{sort_docs}</td><td>{skapad_docs}</td><td>{handlingsbeskrivning}</td><td>{status_docs}</td><td>{handlaggare_docs}</td></tr>";
 
 function displayDetails(data) {
 
@@ -143,7 +143,7 @@ function displayDetails(data) {
     $("#det_arendemening_docs").html(data.arendemening_docs);
     $("#det_handlaggare_docs").html(data.handlaggare_docs);
 
-    var tableData = "<tr><th>Sort</th><th>Datum</th><th>Beskrivning</th><th>Status</th><th>Handläggare</th><th>Filer</th></tr>";
+    var tableData = "<tr><th>Sort</th><th>Datum</th><th>Beskrivning</th><th>Status</th><th>Handläggare</th></tr>";
     $(data.items).each(function (ix, item) {
         if (item.object_type == 'docs_handling') {
             var handelse = {};

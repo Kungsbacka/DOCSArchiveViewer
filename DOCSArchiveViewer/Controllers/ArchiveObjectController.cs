@@ -44,7 +44,19 @@ namespace DOCSArchiveViewer.Controllers
                 {
                     Dictionary<string, object> item = new Dictionary<string, object>();
                     item.Add("object_type", i.ObjectType);
-                    try // Accessing IIPAX.Document.File throws exception when no files are available.
+// This is code to just get the number of files
+                    int numFiles = 0;
+                    try
+                    {
+                        numFiles = ((IIPAX.Document)i).File.Length;
+                    }
+                    catch
+                    {
+                        numFiles = 0;
+                    }
+                    item.Add("Files", numFiles);
+// Below is code to get the actual files                    
+/*                    try // Accessing IIPAX.Document.File throws exception when no files are available.
                     {
                         List<object> files = new List<object>();
                         foreach (IIPAX.File f in ((IIPAX.Document)i).File)
@@ -56,14 +68,13 @@ namespace DOCSArchiveViewer.Controllers
                             //Console.Write(f.DisplayName);
                         }
                         item.Add("Files", files);
-
                     }
 #pragma warning disable CS0168 // Variable is declared but never used
                     catch (Exception e)
 #pragma warning restore CS0168 // Variable is declared but never used
                     {
                         // Normal behaviour, apparently.
-                    }
+                    } */
                     foreach (NameValue n in i.Attribute)
                     {
                         item.Add(n.name, n.Value[0]);
