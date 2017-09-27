@@ -134,7 +134,7 @@ function getDetails(id) {
     Arkiv.details(query, displayDetails);
 }
 
-var tableTemplate = "<tr><td>{sort_docs}</td><td>{skapad_docs}</td><td>{handlingsbeskrivning}</td><td>{status_docs}</td><td>{handlaggare_docs}</td></tr>";
+var tableTemplate = "<tr><td>{sort_docs}</td><td>{skapad_docs}</td><td>{handlingsbeskrivning}</td><td>{status_docs}</td><td>{handlaggare_docs}</td><td>{filer}</td></tr>";
 
 function displayDetails(data) {
 
@@ -143,7 +143,7 @@ function displayDetails(data) {
     $("#det_arendemening_docs").html(data.arendemening_docs);
     $("#det_handlaggare_docs").html(data.handlaggare_docs);
 
-    var tableData = "<tr><th>Sort</th><th>Datum</th><th>Beskrivning</th><th>Status</th><th>Handläggare</th></tr>";
+    var tableData = "<tr><th>Sort</th><th>Datum</th><th>Beskrivning</th><th>Status</th><th>Handläggare</th><th>Handlingar</th></tr>";
     $(data.items).each(function (ix, item) {
         if (item.object_type == 'docs_handling') {
             var handelse = {};
@@ -156,7 +156,8 @@ function displayDetails(data) {
             handelse["filer"] = "";
             if (item.Files) {
                 $(item.Files).each(function (ix, item) {
-                    handelse["filer"] += '<a href="api/File?id=' + encodeURIComponent(item.id) + '" class="archiveFile">' + item.display_name + '</a>';
+                    //handelse["filer"] += '<a href="api/File?id=' + encodeURIComponent(item.id) + '" class="archiveFile">' + item.display_name + '</a>';
+                    handelse["filer"] += "handling.pdf<br/>";
                 });
             }
             tableData += tableTemplate.supplant(handelse);
